@@ -22,6 +22,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_TIME_TO_MAX    60
 #define MOUSEKEY_MAX_SPEED      7
 #define MOUSEKEY_WHEEL_DELAY 0
+#define EEHANDS
+
+#define OLED_FONT_H  "keyboards/input_club/ergodox_infinity/glcdfont.c"
+
+
+#define usb_lld_disconnect_bus(usbp) do {} while(0)
 
 /* key combination for command */
 #define IS_COMMAND() ( \

@@ -266,8 +266,12 @@ __attribute__((weak)) void st7565_task_user(void) {
             0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0x00
         };
 
+        const char coracao[] = {0x03,0x00};
+
         st7565_write(qmk_logo, false);
-        st7565_write("  Infinity  Ergodox  ", false);
+        st7565_write(" Fabricio ", false);
+        st7565_write(coracao , false);
+        st7565_write(" Larissa  ", false);
     }
 }
 #endif

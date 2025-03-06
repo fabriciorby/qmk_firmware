@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
+#include "features/mouse_turbo_click.h"
 
 enum custom_layers {
     BASE,   // default layer
@@ -13,6 +14,7 @@ enum custom_layers {
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
   VRSN,
+  TURBO, // autoclicker key
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -30,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |LCtrl |  '"  |OptShf| VIM  | LOptn|                                       |  Up  | Down |   [  |   ]  |RCtrl |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | App  |  L1  |       |  L1  |  L4  |
+ *                                        | App  | TURBO|       |  L1  |  L4  |
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      | Home |       | PgUp |        |      |
  *                                 | Space|Backsp|------|       |------|Enter   |Backsp|
@@ -47,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,         KC_A,           KC_S,           KC_D,           KC_F,           KC_G,
         KC_LSFT,        LT(1,KC_Z),     KC_X,           KC_C,           KC_V,           KC_B,           ALL_T(KC_NO),
         LCTL_T(KC_NO),  KC_QUOT,        LALT(KC_LSFT),  LT(3,KC_NO),  KC_LALT,
-        LALT_T(KC_APP), TG(1),
+        LALT_T(KC_APP), TURBO,
         KC_HOME,
         KC_SPC,         KC_LGUI,        KC_END,
 
@@ -76,11 +78,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |EE_CLR |      |      |      |      |                                       |   0  |   0  |   .  |   \  |      |
  *   `-----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |Animat|      |       |Toggle|Solid |
+ *                                        |Animat| BOOTL|       |Toggle|Solid |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |Bright|Bright|      |       |      |Hue-  |Hue+  |
+ *                                 |Bright|Bright| RESET|       |      |Hue-  |Hue+  |
  *                                 |ness- |ness+ |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      | DEBUG|       |MAKE  |      |      |
  *                                 `--------------------'       `--------------------'
  */
 // SYMBOLS
@@ -91,9 +93,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS,KC_HASH,KC_DLR, KC_LPRN,KC_RPRN,KC_GRV,
        KC_TRNS,KC_PERC,KC_CIRC,KC_LBRC,KC_RBRC,KC_TILD,KC_TRNS,
        EE_CLR, KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
-                                       LM_NEXT,KC_TRNS,
-                                               KC_TRNS,
-                               LM_BRID,LM_BRIU,KC_TRNS,
+                                       LM_NEXT,QK_BOOTLOADER,
+                                               QK_REBOOT,
+                               LM_BRID,LM_BRIU,QK_DEBUG_TOGGLE,
        // right hand
        KC_TRNS, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F11,
        KC_TRNS, KC_UP,   KC_7,   KC_8,    KC_9,    KC_ASTR, KC_F12,
@@ -102,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          KC_0,   KC_0,    KC_DOT,  KC_BSLS,  KC_TRNS,
        LM_TOGG, KC_TRNS,
        KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS
+       QK_MAKE, KC_TRNS, KC_TRNS
 ),
 /* Keymap 2: Media and mouse keys
  *
@@ -243,6 +245,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
       }
       return false;
+      break;
+    case TURBO:
+      if (!process_mouse_turbo_click(keycode, record, TURBO)) {
+        return false;
+      }
       break;
   }
   return true;

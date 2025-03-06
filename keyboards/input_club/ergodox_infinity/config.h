@@ -26,9 +26,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define OLED_FONT_H  "keyboards/input_club/ergodox_infinity/glcdfont.c"
 
-
-#define usb_lld_disconnect_bus(usbp) do {} while(0)
-
 /* key combination for command */
 #define IS_COMMAND() ( \
     get_mods() == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL)) || \

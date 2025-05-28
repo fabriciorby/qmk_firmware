@@ -22,11 +22,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const uint16_t PROGMEM esc_combo[] = {RSFT_T(KC_J), RGUI_T(KC_K), COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {LGUI_T(KC_D), LSFT_T(KC_F), COMBO_END};
 const uint16_t PROGMEM caps_combo[] = {LSFT_T(KC_F), RSFT_T(KC_J), COMBO_END};
+const uint16_t PROGMEM leftb_combo[] = {KC_R, KC_T, COMBO_END};
+const uint16_t PROGMEM rightb_combo[] = {KC_U, KC_Y, COMBO_END};
+const uint16_t PROGMEM leftp_combo[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM rightp_combo[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM leftB_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM rightB_combo[] = {KC_I, KC_O, COMBO_END};
+
+
 
 combo_t key_combos[] = {
     COMBO(esc_combo, KC_ESC),
     COMBO(tab_combo, KC_TAB),
-    COMBO(caps_combo, KC_CAPS_LOCK)
+    COMBO(caps_combo, KC_CAPS_LOCK),
+    COMBO(leftp_combo, LSFT(KC_9)),
+    COMBO(rightp_combo, LSFT(KC_0)),
+    COMBO(leftb_combo, KC_LBRC),
+    COMBO(rightb_combo, KC_RBRC),
+    COMBO(leftB_combo, LSFT(KC_LBRC)),
+    COMBO(rightB_combo, LSFT(KC_RBRC))
 };
 
 const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
@@ -74,12 +88,12 @@ LCTL_T(KC_A), LALT_T(KC_S), LGUI_T(KC_D), LSFT_T(KC_F), LSA_T(KC_G),     LSA_T(K
     ),
     [MEDIA] = LAYOUT_split_3x5_3(
        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                               KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-     KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, KC_CAPS_LOCK,                        KC_MRWD, KC_VOLD, KC_VOLU, KC_MFFD,   KC_NO,
+     KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT,   KC_NO,                             KC_MRWD, KC_VOLD, KC_VOLU, KC_MFFD,   KC_NO,
        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                               KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
                                   KC_NO,   KC_NO,   KC_NO,           KC_MSTP,   KC_MPLY,  KC_MUTE
     ),
     [NAV] = LAYOUT_split_3x5_3(
-       KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                               KC_UNDO,    KC_PSTE,    KC_COPY,  KC_CUT,   KC_PSCR,
+       KC_NO,   KC_NO, DT_DOWN,   DT_UP,DT_PRNT,                               KC_UNDO,    KC_PSTE,    KC_COPY,  KC_CUT,   KC_PSCR,
      KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, KC_CAPS_LOCK,                          KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT, KC_CAPS_LOCK,
        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                               KC_INSERT,  KC_PGDN,    KC_PGUP,  KC_HOME,  KC_END,
                                   KC_NO,   KC_NO,   KC_NO,            KC_ENTER, KC_BSPC,    KC_DELETE

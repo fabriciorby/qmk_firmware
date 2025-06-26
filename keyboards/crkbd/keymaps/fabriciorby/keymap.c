@@ -63,6 +63,7 @@ enum custom_layers {
     SYM,
     NUM,
     FUN,
+    HEL,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -83,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_split_3x5_3(
         KC_Q,         KC_W,         KC_E,         KC_R,        KC_T,            KC_Y,         KC_U,         KC_I,         KC_O,                 KC_P,
 LCTL_T(KC_A), LALT_T(KC_S), LGUI_T(KC_D), LSFT_T(KC_F), LSA_T(KC_G),     LSA_T(KC_H), RSFT_T(KC_J), RGUI_T(KC_K), RALT_T(KC_L), RCTL_T(KC_SEMICOLON),
-        KC_Z,         KC_X,         KC_C,         KC_V,        KC_B,            KC_N,         KC_M,      KC_COMM,       KC_DOT,              KC_SLSH,
+LT(HEL,KC_Z),         KC_X,         KC_C,         KC_V,        KC_B,            KC_N,         KC_M,      KC_COMM,       KC_DOT,      LT(HEL,KC_SLSH),
           LT(MEDIA,KC_ESCAPE), LT(NAV, KC_SPACE), LT(MOUSE, KC_TAB),     LT(SYM, KC_ENTER), LT(NUM, KC_BSPC), LT(FUN, KC_DELETE)
     ),
     [MEDIA] = LAYOUT_split_3x5_3(
@@ -122,6 +123,13 @@ LSFT(KC_GRAVE),    LSFT(KC_1), LSFT(KC_2), LSFT(KC_3), LSFT(KC_BACKSLASH),      
         KC_PAUSE,       KC_F1,    KC_F2,    KC_F3,    KC_F12,                    KC_NO,  KC_NO,      KC_NO,    KC_NO,    KC_NO,
                                     LGUI(KC_SPACE), KC_SPACE, KC_TAB,    KC_NO,  KC_NO,  KC_NO
     ),
+    [HEL] = LAYOUT_split_3x5_3(
+        KC_NO,  KC_NO, KC_LCBR, KC_RCBR, KC_NO,             KC_NO,  KC_7,   KC_8,   KC_9,   KC_NO,
+        KC_NO,  KC_NO, KC_LPRN, KC_RPRN, KC_NO,             KC_NO,  KC_4,   KC_5,   KC_6,   KC_NO,
+        KC_NO,  KC_NO, KC_LBRC, KC_RBRC, KC_NO,             KC_NO,  KC_1,   KC_2,   KC_3,   KC_NO,
+                                KC_NO, KC_NO, KC_NO,    KC_0, KC_0, KC_0
+    ),
+
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {

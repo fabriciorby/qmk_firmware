@@ -21,7 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 const uint16_t PROGMEM esc_combo[] = {RSFT_T(KC_J), RGUI_T(KC_K), COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {LGUI_T(KC_D), LSFT_T(KC_F), COMBO_END};
-const uint16_t PROGMEM caps_combo[] = {LSFT_T(KC_F), RSFT_T(KC_J), COMBO_END};
+const uint16_t PROGMEM capsl_combo[] = {KC_W, KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM capsr_combo[] = {KC_U, KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM leftb_combo[] = {KC_V, KC_B, COMBO_END};
 const uint16_t PROGMEM rightb_combo[] = {KC_N, KC_M, COMBO_END};
 const uint16_t PROGMEM leftp_combo[] = {KC_C, KC_V, COMBO_END};
@@ -29,12 +30,11 @@ const uint16_t PROGMEM rightp_combo[] = {KC_M, KC_COMMA, COMBO_END};
 const uint16_t PROGMEM leftB_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM rightB_combo[] = {KC_COMMA, KC_DOT, COMBO_END};
 
-
-
 combo_t key_combos[] = {
     COMBO(esc_combo, KC_ESC),
     COMBO(tab_combo, KC_TAB),
-    COMBO(caps_combo, KC_CAPS_LOCK),
+    COMBO(capsr_combo, KC_CAPS_LOCK),
+    COMBO(capsl_combo, KC_CAPS_LOCK),
     COMBO(leftp_combo, LSFT(KC_9)),
     COMBO(rightp_combo, LSFT(KC_0)),
     COMBO(leftb_combo, KC_LBRC),

@@ -2,8 +2,55 @@
 #include "version.h"
 #include "features/mouse_turbo_click.h"
 
+const uint16_t PROGMEM esc_combo[] = {RSFT_T(KC_J), RGUI_T(KC_K), COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {LGUI_T(KC_D), LSFT_T(KC_F), COMBO_END};
+const uint16_t PROGMEM capsl_combo[] = {KC_W, KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM capsr_combo[] = {KC_U, KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM leftb_combo[] = {KC_V, KC_B, COMBO_END};
+const uint16_t PROGMEM rightb_combo[] = {KC_N, KC_M, COMBO_END};
+const uint16_t PROGMEM leftp_combo[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM rightp_combo[] = {KC_M, KC_COMMA, COMBO_END};
+const uint16_t PROGMEM leftB_combo[] = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM rightB_combo[] = {KC_COMMA, KC_DOT, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(esc_combo, KC_ESC),
+    COMBO(tab_combo, KC_TAB),
+    COMBO(capsr_combo, KC_CAPS_LOCK),
+    COMBO(capsl_combo, KC_CAPS_LOCK),
+    COMBO(leftp_combo, LSFT(KC_9)),
+    COMBO(rightp_combo, LSFT(KC_0)),
+    COMBO(leftb_combo, KC_LBRC),
+    COMBO(rightb_combo, KC_RBRC),
+    COMBO(leftB_combo, LSFT(KC_LBRC)),
+    COMBO(rightB_combo, LSFT(KC_RBRC))
+};
+
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
+    LAYOUT_ergodox(
+        'L', 'L', 'L', 'L', 'L', 'L', 'L',
+        'L', 'L', 'L', 'L', 'L', 'L', 'L',
+        'L', 'L', 'L', 'L', 'L', 'L',
+        'L', 'L', 'L', 'L', 'L', 'L', 'L',
+        'L', 'L', 'L', 'L', 'L',
+        '*', '*',
+        '*',
+        '*', '*', '*',
+
+        'R', 'R', 'R', 'R', 'R', 'R', 'R',
+        'R', 'R', 'R', 'R', 'R', 'R', 'R',
+             'R', 'R', 'R', 'R', 'R', 'R',
+        'R', 'R', 'R', 'R', 'R', 'R', 'R',
+             'R', 'R', 'R', 'R', 'R',
+        '*', '*',
+        '*',
+        '*', '*', '*'
+    );
+
+
 enum custom_layers {
     BASE,   // default layer
+    HMOD,   // home row modification
     SYMB,   // symbols
     MDIA,   // media keys
     VIMK,   // vim keys
@@ -18,7 +65,7 @@ enum custom_keycodes {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Keymap 0: Basic layer
+/* Keymap 0: Base layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |   `~   |   1  |   2  |   3  |   4  |   5  |Delete|           |  +=  |   6  |   7  |   8  |   9  |   0  |   -    |
@@ -32,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |LCtrl |  '"  |OptShf| VIM  | LOptn|                                       |  Up  | Down |   [  |   ]  |RCtrl |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | App  | TURBO|       |  L1  |  L4  |
+ *                                        | App  | TURBO|       |  L1  |  L5  |
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      | Home |       | PgUp |        |      |
  *                                 | Space|Backsp|------|       |------|Enter   |Backsp|
@@ -47,8 +94,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,         KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_DEL,
         KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           KC_CAPS,
         KC_ESC,         KC_A,           KC_S,           KC_D,           KC_F,           KC_G,
-        KC_LSFT,        LT(1,KC_Z),     KC_X,           KC_C,           KC_V,           KC_B,           ALL_T(KC_NO),
-        LCTL_T(KC_NO),  KC_QUOT,        LALT(KC_LSFT),  LT(3,KC_NO),  KC_LALT,
+        KC_LSFT,        LT(SYMB,KC_Z),  KC_X,           KC_C,           KC_V,           KC_B,           ALL_T(KC_NO),
+        LCTL_T(KC_NO),  KC_QUOT,        LALT(KC_LSFT),  LT(VIMK,KC_NO),  KC_LALT,
         LALT_T(KC_APP), TURBO,
         KC_HOME,
         KC_SPC,         KC_LGUI,        KC_END,
@@ -58,9 +105,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_EQL,         KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINS,
         KC_LGUI,        KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLS,
                         KC_H,           KC_J,           KC_K,           KC_L,           KC_SCLN,        RGUI_T(KC_QUOT),
-        MEH_T(KC_NO),   KC_N,           KC_M,           KC_COMM,        KC_DOT,         LT(1,KC_SLSH),  KC_RSFT,
+        MEH_T(KC_NO),   KC_N,           KC_M,           KC_COMM,        KC_DOT,         LT(SYMB,KC_SLSH),  KC_RSFT,
                         KC_UP,          KC_DOWN,        KC_LBRC,        KC_RBRC,        RCTL_T(KC_NO),
-        TG(1),          TG(4),
+        TG(SYMB),       DF(HMOD),
+        KC_PGUP,
+        KC_PGDN, KC_ENT, KC_BSPC
+    ),
+// Base with Home Row Mod
+[HMOD] = LAYOUT_ergodox(
+        //Left Hand
+//      |               |               |               |               |               |               |               |
+        KC_GRV,         KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_DEL,
+        KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           KC_CAPS,
+        KC_ESC,         LCTL_T(KC_A),   LALT_T(KC_S),   LGUI_T(KC_D),   LSFT_T(KC_F),   LSA_T(KC_G),
+        KC_LSFT,        LT(SYMB,KC_Z),  KC_X,           KC_C,           KC_V,           KC_B,           ALL_T(KC_NO),
+        LCTL_T(KC_NO),  KC_QUOT,        LALT(KC_LSFT),  KC_LALT,        LT(VIMK,KC_NO),
+        LALT_T(KC_APP), TURBO,
+        KC_HOME,
+        KC_SPC,         KC_LGUI,        KC_END,
+
+        //Right Hand
+//      |               |               |               |               |               |               |               |
+        KC_EQL,         KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINS,
+        KC_LGUI,        KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLS,
+                        LSA_T(KC_H),    RSFT_T(KC_J),   RGUI_T(KC_K),   RALT_T(KC_L),   RCTL_T(KC_SCLN),RGUI_T(KC_QUOT),
+        MEH_T(KC_NO),   KC_N,           KC_M,           KC_COMM,        KC_DOT,         LT(SYMB,KC_SLSH),  KC_RSFT,
+                        KC_UP,          KC_DOWN,        KC_LBRC,        KC_RBRC,        RCTL_T(KC_NO),
+        TG(SYMB),       DF(BASE),
         KC_PGUP,
         KC_PGDN, KC_ENT, KC_BSPC
     ),
@@ -102,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_DOWN, KC_4,   KC_5,    KC_6,    KC_PLUS, KC_TRNS,
        KC_TRNS, KC_AMPR, KC_1,   KC_2,    KC_3,    KC_EQL, KC_TRNS,
                          KC_0,   KC_0,    KC_DOT,  KC_BSLS,  KC_TRNS,
-       LM_TOGG, KC_TRNS,
+       LM_TOGG, TG(BASE),
        KC_TRNS,
        QK_MAKE, KC_TRNS, KC_TRNS
 ),
@@ -218,9 +289,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,         KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_DEL,
         KC_TAB,         KC_Q,           KC_D,           KC_R,           KC_W,           KC_B,           KC_CAPS,
         KC_ESC,         KC_A,           KC_S,           KC_H,           KC_T,           KC_G,
-        KC_LSFT,        LT(1,KC_Z),     KC_X,           KC_M,           KC_C,           KC_V,           ALL_T(KC_NO),
-        LCTL_T(KC_NO),  KC_QUOT,        LALT(KC_LSFT),  LT(3,KC_NO),  KC_LALT,
-        LALT_T(KC_APP), TG(1),
+        KC_LSFT,        LT(SYMB,KC_Z),     KC_X,           KC_M,           KC_C,           KC_V,           ALL_T(KC_NO),
+        LCTL_T(KC_NO),  KC_QUOT,        LALT(KC_LSFT),  LT(SYMB,KC_NO),  KC_LALT,
+        LALT_T(KC_APP), TG(SYMB),
         KC_HOME,
         KC_SPC,         KC_LGUI,        KC_END,
 
@@ -229,9 +300,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_EQL,         KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINS,
         KC_LGUI,        KC_J,           KC_F,           KC_U,           KC_P,           KC_SCLN,        KC_BSLS,
                         KC_Y,           KC_N,           KC_E,           KC_O,           KC_I,           RGUI_T(KC_QUOT),
-        MEH_T(KC_NO),   KC_K,           KC_L,           KC_COMM,        KC_DOT,         LT(1,KC_SLSH),  KC_RSFT,
+        MEH_T(KC_NO),   KC_K,           KC_L,           KC_COMM,        KC_DOT,         LT(SYMB,KC_SLSH),  KC_RSFT,
                         KC_UP,          KC_DOWN,        KC_LBRC,        KC_RBRC,        RCTL_T(KC_NO),
-        TG(1),          TG(4),
+        TG(SYMB),       TG(BASE),
         KC_PGUP,
         KC_PGDN, KC_ENT, KC_BSPC
     ),
